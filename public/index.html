@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="TicTacToe">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Tic Tac toe</title>
+
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <style type="text/css">
+        .table>tbody>tr>td {
+            border: 1px solid black !important;
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-controller="MainController">
+    <h1>Tic tac toe</h1>
+    <div class="container">
+        <form ng-hide="gameStarted" ng-submit="gameStart()" class="form-inline">
+                <div class="form-group ">
+                    <strong>Enter a board size(3-10):</strong>
+                    <input class="form-control" type="number" min="3" max="10" ng-disabled="gameStarted" ng-model="boardSize">
+                     <button class="btn btn-default" type="submit">Start game</button>
+                </div>
+            </div>
+           
+        </form>
+        <br>
+          <p ng-show="gameStarted && !gameFinished"><span class="glyphicon glyphicon-remove" ng-show="checked"></span> <span class="glyphicon glyphicon-record" ng-hide="checked"></span> Turns</p>
+        <br>    
+    
+        <table ng-show="gameStarted" ng-disabled="gameFinished" class="table table-responsive">
+            <tr ng-repeat="row in getBoardSize() track by $index">
+                <td ng-click="play($parent.$index,$index)" ng-model="board[$parent.$index][$index]" ng-repeat="col in getBoardSize() track by $index">
+                    <span class="glyphicon glyphicon-remove" ng-show="board[$parent.$index][$index]"></span>
+                    <span class="glyphicon glyphicon-record" ng-hide="board[$parent.$index][$index] || board[$parent.$index][$index]==undefined"></span>
+                    <span ng-show="board[$parent.$index][$index] ==undefined"> Freezone </span>
+
+                </td>
+            </tr>
+        </table>
+        
+         <br>
+          <h2 ng-show="gameFinished && numPlays!=(boardSize*boardSize)"><span class="glyphicon glyphicon-remove" ng-show="checked"></span> <span class="glyphicon glyphicon-record" ng-hide="checked"></span> has won the game,reload the page to play again</h2>
+          <h2 ng-show="gameFinished && numPlays==(boardSize*boardSize)"> No one has won the game</h2>
+        <br> 
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js"></script>
+
+    <script type="text/javascript" src="javascripts/app.js"></script>
+</body>
+
+</html>
